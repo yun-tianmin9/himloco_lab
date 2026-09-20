@@ -1,0 +1,7 @@
+# Training artifacts under logs/ are stored as plain blobs, NOT via Git LFS.
+#
+# GitHub refuses to upload new LFS objects to a public fork:
+#   batch response: @<user> can not upload new objects to public fork
+# The root .gitattributes marks *.pt as LFS, so we unset the filter for
+# everything in this subtree. Deeper .gitattributes win over the root file.
+*.pt -filter -diff -merge -text
