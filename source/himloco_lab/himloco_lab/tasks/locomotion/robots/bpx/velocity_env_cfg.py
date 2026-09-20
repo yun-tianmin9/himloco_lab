@@ -332,7 +332,8 @@ class RewardsCfg:
         func=mdp.base_height, 
         weight=-1.0, 
         params={
-            "target_height": 0.3,
+            # "target_height": 0.3,
+            "target_height": 0.376,
             "sensor_cfg": SceneEntityCfg("base_height_scanner"),
         },
     )
@@ -342,7 +343,7 @@ class RewardsCfg:
         weight=-0.01,
         params={
             "asset_cfg": SceneEntityCfg("robot", body_names=".*_toe_link"),
-            "target_height": -0.2,
+            "target_height": -0.34,
             "command_name": "base_velocity",
         }
     )
