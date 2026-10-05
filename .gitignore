@@ -69,3 +69,8 @@ tests/
 
 # Docker history
 .isaac-lab-docker-history
+
+# Robot meshes (do not commit)
+**/*.stl
+**/*.STL
+**/dog.zip
