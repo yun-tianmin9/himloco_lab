@@ -108,7 +108,7 @@ class RobotSceneCfg(InteractiveSceneCfg):
 
     # sensors
     height_scanner = RayCasterCfg(
-        prim_path="{ENV_REGEX_NS}/Robot/base",
+        prim_path="{ENV_REGEX_NS}/Robot/base_link",
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
         ray_alignment="yaw",
         pattern_cfg=patterns.GridPatternCfg(resolution=0.1, size=[1.6, 1.0]),
@@ -116,7 +116,7 @@ class RobotSceneCfg(InteractiveSceneCfg):
         mesh_prim_paths=["/World/ground"],  
     )
     base_height_scanner = RayCasterCfg(
-        prim_path="{ENV_REGEX_NS}/Robot/base",
+        prim_path="{ENV_REGEX_NS}/Robot/base_link",
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
         ray_alignment="yaw",
         pattern_cfg=patterns.GridPatternCfg(resolution=0.05, size=[0.3, 0.4]),
@@ -155,7 +155,7 @@ class EventCfg:
         func=mdp.randomize_rigid_body_mass,
         mode="startup",
         params={
-            "asset_cfg": SceneEntityCfg("robot", body_names="base"),
+            "asset_cfg": SceneEntityCfg("robot", body_names="base_link"),
             "mass_distribution_params": (-1.0, 2.0),
             "operation": "add",
         },
@@ -165,7 +165,7 @@ class EventCfg:
         func=mdp.randomize_rigid_body_com,
         mode="startup",
         params={
-            "asset_cfg": SceneEntityCfg("robot", body_names="base"),
+            "asset_cfg": SceneEntityCfg("robot", body_names="base_link"),
             "com_range": {"x": (-0.05, 0.05), "y": (-0.05, 0.05), "z": (-0.05, 0.05)},
         },
     )
@@ -206,7 +206,7 @@ class EventCfg:
             "period_step": 8,
             "force_range": (-30.0, 30.0),
             "torque_range": (-0.0, 0.0),
-            "asset_cfg": SceneEntityCfg("robot", body_names="base"),
+            "asset_cfg": SceneEntityCfg("robot", body_names="base_link"),
         },
     )
     push_robot = EventTerm(
@@ -215,7 +215,7 @@ class EventCfg:
         interval_range_s=(16.0, 16.0),
         params={
             "velocity_range": {"x": (-1, 1), "y": (-1, 1)},
-            "asset_cfg": SceneEntityCfg("robot", body_names="base"),
+            "asset_cfg": SceneEntityCfg("robot", body_names="base_link"),
         },
     )
 
@@ -282,7 +282,7 @@ class ObservationsCfg:
         base_lin_vel = ObsTerm(func=mdp.base_lin_vel, scale=2.0, clip=(-100, 100), noise=Unoise(n_min=-0.1, n_max=0.1))
         base_external_force = ObsTerm(
             func=mdp.base_external_force,
-            params={"asset_cfg": SceneEntityCfg("robot", body_names="base")},
+            params={"asset_cfg": SceneEntityCfg("robot", body_names="base_link")},
             clip=(-100, 100),
         )
         height_scanner = ObsTerm(func=mdp.height_scan_clip,
@@ -449,7 +449,7 @@ class TerminationsCfg:
     time_out = DoneTerm(func=mdp.time_out, time_out=True)
     base_contact = DoneTerm(
         func=mdp.illegal_contact,
-        params={"sensor_cfg": SceneEntityCfg("contact_forces", body_names="base"), "threshold": 1.0},
+        params={"sensor_cfg": SceneEntityCfg("contact_forces", body_names="base_link"), "threshold": 1.0},
     )
     terrain_out_of_bounds = DoneTerm(
         func=mdp.terrain_out_of_bounds,

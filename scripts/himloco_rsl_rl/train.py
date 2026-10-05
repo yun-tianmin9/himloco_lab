@@ -147,12 +147,12 @@ def main(env_cfg: ManagerBasedRLEnvCfg, agent_cfg: HIMOnPolicyRunnerCfg):
     dump_yaml(os.path.join(log_dir, "params", "agent.yaml"), agent_cfg)
     
     # Export deployment configuration with history_length and use_encoder flag
-    export_deploy_cfg(
-        env.unwrapped, 
-        log_dir,
-        history_length=agent_cfg.history_length,
-        use_encoder=True  # HimLoco uses dual network architecture
-    )
+    # export_deploy_cfg(
+    #     env.unwrapped, 
+    #     log_dir,
+    #     history_length=agent_cfg.history_length,
+    #     use_encoder=True  # HimLoco uses dual network architecture
+    # )
      
     shutil.copy(
         inspect.getfile(env_cfg.__class__),
